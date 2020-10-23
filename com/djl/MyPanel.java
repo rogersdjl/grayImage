@@ -114,7 +114,7 @@ public class MyPanel extends JPanel implements FileResolve {
                     graphics.drawString(String.format("(%s,%s)", x_str +"s", (600 - point.getY()) / 6+"%") , x - 20, point.getY() + 20);
 					//recording
 					try{
-						File f = new File("C:\\Users\\HiraharaLab\\Pictures\\RHEED\\new\\intensityLog.txt");
+						File f = new File("intensityLog_path"); // 
 						if(!f.exists()){
 							f.createNewFile();
 						}

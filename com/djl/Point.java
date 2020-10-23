@@ -4,14 +4,14 @@ public class Point {
 
     private Integer x;
     private Integer y;
-    private Integer curUnit = 0;
+    private Integer curUnit = 1;
 
 
     public void changeUnit(int unit){
         if (curUnit == unit) {
             return;
         }
-        x= x/unit;
+        
         curUnit = unit;
 
     }
@@ -26,7 +26,7 @@ public class Point {
     }
 
     public Integer getX() {
-        return x;
+        return x/curUnit;
     }
     public void setX(Integer x) {
         this.x = x;

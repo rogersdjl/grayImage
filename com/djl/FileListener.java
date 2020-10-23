@@ -20,6 +20,7 @@ public class FileListener {
         picFileExts.add("JPG");
         picFileExts.add("jpg");
         picFileExts.add("jpeg");
+        picFileExts.add("bmp");
     }
 
     public static void listenFileDir(String dir, FileResolve fileResolve) {

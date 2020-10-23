@@ -15,10 +15,9 @@
 > * ```/com/djl/MyPanel.java```
 >   * Line - 117 : ```File f = new File            ("intensityLog_path");```  
 > determine the intensity log path.
-> 
-1. javac com/djl/*.java
-
-
-
-
-jar cvfm siwen.jar MANIFEST.MF -C com/djl .
+3. Compile the all the file
+> ```javac com/djl/*.java```
+4. Run the program
+> ```java com/djl/ImageResolve.java```
+5. Packaging the program
+> ```jar cvfm IntensityLog.jar MANIFEST.MF -C com/djl .```

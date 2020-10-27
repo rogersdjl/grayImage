@@ -4,20 +4,20 @@ import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyPanel extends JPanel implements FileResolve {
-
-
-
-    private static  Point POINT_1 = new Point(0,0);
-    private static  Point POINT_2 = new Point(30,30);
-
+	
+	
+	MyPanel(int x1, int y1, int x2, int y2){
+		POINT_1 = new Point(x1, y1);
+		POINT_2 = new Point(x2, y2);
+	}
+	
+	private Point POINT_1; //leftup
+	private Point POINT_2; //rightdown
 
     private static volatile int TIME_UNIT = 1;
 
@@ -29,8 +29,7 @@ public class MyPanel extends JPanel implements FileResolve {
     private static volatile int X_DRAW_STRING_OFFSET = -20;
     private static volatile int Y_DRAW_STRING_OFFSET = 20;
 
-    private static List<Point> pointList = new ArrayList<>();
-
+    public static java.util.List<Point> pointList = new ArrayList<Point>();
 
 
     @Override
@@ -84,7 +83,6 @@ public class MyPanel extends JPanel implements FileResolve {
     @Override
     public void paint(Graphics graphics) {
         super.paint(graphics);
-        // 原点设为50， 610， 即x偏向+50， y偏向为610->0。
         int x1 = 0 + X_OFFSET;
         int y1 = 0 + Y_OFFSET;
         graphics.drawLine(x1, y1, x1, 0);
@@ -97,8 +95,8 @@ public class MyPanel extends JPanel implements FileResolve {
         }
 
         graphics.drawString("(0,0)", x1 + X_DRAW_STRING_OFFSET, y1 + Y_DRAW_STRING_OFFSET);
-        graphics.drawString("时间(s)，目前是第" + TIME_UNIT + "分钟", 100, 650);
-        graphics.drawString("灰度（%）", 10, 600);
+        graphics.drawString("time(s), now is " + TIME_UNIT + " min(s)", 100, 650);
+        graphics.drawString("intensity(%)", 10, 600);
 
         if (pointList.size() == 0) {
             return;
@@ -114,6 +112,21 @@ public class MyPanel extends JPanel implements FileResolve {
                 if (i == pointList.size() - 1 ) {
                     String x_str = new BigDecimal(point.getX() * TIME_UNIT).divide(new BigDecimal("10"), 2 ,BigDecimal.ROUND_HALF_UP).toString();
                     graphics.drawString(String.format("(%s,%s)", x_str +"s", (600 - point.getY()) / 6+"%") , x - 20, point.getY() + 20);
+					//recording
+					try{
+						File f = new File("intensityLog_path"); // 
+						if(!f.exists()){
+							f.createNewFile();
+						}
+						FileOutputStream fileOutputStream = new FileOutputStream(f, true);
+						String format = String.format("%s\t%s\n", x_str, new BigDecimal((600 - point.getY())).divide(new BigDecimal("6"), 4, BigDecimal.ROUND_HALF_UP) + "%");
+						System.out.println(format);
+						fileOutputStream.write(format.getBytes());
+						fileOutputStream.flush();
+						fileOutputStream.close();
+					} catch(Exception e){
+						e.printStackTrace();
+					}
                 }
             }
             for (int i = 1; i < pointList.size(); i++) {

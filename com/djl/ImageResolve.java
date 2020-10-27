@@ -4,7 +4,7 @@ import javax.swing.*;
 
 public class ImageResolve {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         String pathname = "File_path"; // Saved figures location
         // One should set the square position in advance.
         // The coordinates format should be leftup_X, Leftup_Y, Rightdown_X, Rightdown_Y
